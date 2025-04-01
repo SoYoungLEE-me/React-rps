@@ -1,0 +1,16 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.Box {
+  display: flex;
+  gap: 30px;
+  margin: 50px auto;
+}
+
+.ButtonItem > Button {
+  font-size: 40px;
+}
