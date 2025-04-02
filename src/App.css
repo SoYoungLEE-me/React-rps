@@ -11,6 +11,31 @@
   margin: 50px auto;
 }
 
+.ButtonItem {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
 .ButtonItem > Button {
   font-size: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.ButtonItem > button:hover {
+  transform: scale(1.1);
+}
+
+.ButtonItem > button:nth-child(1) {
+  background-color: #9effa9;
+}
+.ButtonItem > button:nth-child(2) {
+  background-color: #9ef5ff;
+}
+.ButtonItem > button:nth-child(3) {
+  background-color: #a69eff;
 }
