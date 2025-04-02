@@ -6,7 +6,7 @@ const Box = ({ title, isLeft, result, item }) => {
   const isHandIcon = ["✊", "✌️", "✋"].includes(icon);
 
   return (
-    <div className="BoxItem">
+    <div className={`BoxItem ${result}`}>
       <div className="Top">
         <h1>{title}</h1>
       </div>

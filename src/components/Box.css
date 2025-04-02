@@ -28,3 +28,15 @@
 .Right {
   transform: rotate(-90deg);
 }
+
+.WIN {
+  border: 5px solid rgb(104, 206, 246);
+}
+
+.LOSE {
+  border: 5px solid rgb(255, 73, 73);
+}
+
+.TIE {
+  border: 5px solid rgb(165, 255, 186);
+}
