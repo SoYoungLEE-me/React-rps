@@ -1,7 +1,8 @@
 .BoxItem {
   border: 5px solid rgb(140, 140, 140);
-  width: 400px;
-  height: 500px;
+  border-radius: 50px;
+  width: 350px;
+  height: 450px;
 
   display: flex;
   flex-direction: column;

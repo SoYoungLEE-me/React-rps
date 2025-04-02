@@ -1,8 +1,8 @@
 import React from "react";
 import "./Box.css";
 
-const Box = ({ title, isLeft, result, item }) => {
-  const icon = item?.icon || (isLeft ? "🤖" : "🙋‍♂️");
+const Box = ({ title, isLeft, result, item, forceIcon }) => {
+  const icon = forceIcon || item?.icon || (isLeft ? "🤖" : "🙋‍♂️");
   const isHandIcon = ["✊", "✌️", "✋"].includes(icon);
 
   return (

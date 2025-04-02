@@ -22,19 +22,39 @@ function App() {
   const [ComputerSelect, setComputerSelect] = useState(null);
   const [userResult, setUserResult] = useState("");
   const [computerResult, setComputerResult] = useState("");
+  const [animationInterval, setAnimationInterval] = useState(null);
+
+  //스타트 버튼 추가
+  const [isStarted, setIsStarted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [computerIcon, setComputerIcon] = useState("🤖");
 
   const play = (userChoice) => {
-    setUserSelect(choice[userChoice]);
+    if (animationInterval) {
+      clearInterval(animationInterval); // 이전 interval 제거
+      setAnimationInterval(null);
+    }
 
-    let computerChoice = randomChoice();
-    setComputerSelect(computerChoice);
+    const user = choice[userChoice];
+    const computer = randomChoice();
 
-    const userResult = judgement(choice[userChoice], computerChoice);
+    setUserSelect(user);
+    setComputerSelect(computer);
+    setComputerIcon(computer.icon);
+    setIsPlaying(false); // 컴퓨터 애니메이션 멈춤
+
+    const userResult = judgement(user, computer);
     setUserResult(userResult);
 
     const computerResult =
       userResult === "WIN" ? "LOSE" : userResult === "LOSE" ? "WIN" : "TIE";
     setComputerResult(computerResult);
+
+    setTimeout(() => {
+      setComputerSelect(null);
+      setIsPlaying(true);
+      startComputerAnimation();
+    }, 1000);
   };
 
   const randomChoice = () => {
@@ -56,6 +76,24 @@ function App() {
     }
   };
 
+  const startGame = () => {
+    setIsStarted(true);
+    setIsPlaying(true);
+    startComputerAnimation();
+  };
+
+  const startComputerAnimation = () => {
+    const icons = ["✊", "✋", "✌️"];
+    let index = 0;
+
+    const interval = setInterval(() => {
+      setComputerIcon(icons[index % 3]);
+      index++;
+    }, 120);
+
+    setAnimationInterval(interval);
+  };
+
   return (
     <div className="App">
       <div className="Box">
@@ -64,6 +102,7 @@ function App() {
           isLeft={true}
           result={computerResult}
           item={ComputerSelect}
+          forceIcon={isPlaying ? computerIcon : undefined}
         />
         <Box
           title={"You"}
@@ -72,11 +111,17 @@ function App() {
           item={userSelect}
         />
       </div>
-      <div className="ButtonItem">
-        <button onClick={() => play("rock")}>✊</button>
-        <button onClick={() => play("scissors")}>✌️</button>
-        <button onClick={() => play("paper")}>✋</button>
-      </div>
+      {!isStarted ? (
+        <div className="StartItem">
+          <button onClick={startGame}>START</button>
+        </div>
+      ) : (
+        <div className="ButtonItem">
+          <button onClick={() => play("rock")}>✊</button>
+          <button onClick={() => play("scissors")}>✌️</button>
+          <button onClick={() => play("paper")}>✋</button>
+        </div>
+      )}
     </div>
   );
 }

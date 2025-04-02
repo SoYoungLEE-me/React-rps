@@ -39,3 +39,23 @@
 .ButtonItem > button:nth-child(3) {
   background-color: #a69eff;
 }
+
+.StartItem {
+  display: flex;
+  justify-content: center;
+}
+
+.StartItem > button {
+  border: none;
+  border-radius: 15px;
+  padding: 20px 30px;
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: #8278f2;
+  color: white;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.StartItem > button:hover {
+  transform: scale(1.1);
+}
