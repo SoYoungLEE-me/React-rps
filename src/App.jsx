@@ -29,6 +29,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [computerIcon, setComputerIcon] = useState("🤖");
   const intervalRef = useRef(null);
+  const cancelledRef = useRef(false);
 
   //스코어
   const [score, setScore] = useState({
@@ -56,11 +57,11 @@ function App() {
     setComputerResult(computerResult);
 
     setTimeout(() => {
-      if (isStarted) {
-        setComputerSelect(null);
-        setIsPlaying(true);
-        startComputerAnimation();
-      }
+      if (cancelledRef.current) return;
+
+      setComputerSelect(null);
+      setIsPlaying(true);
+      startComputerAnimation();
     }, 1000);
 
     setScore((prev) => {
@@ -91,6 +92,8 @@ function App() {
   };
 
   const startGame = () => {
+    cancelledRef.current = false;
+
     setIsStarted(true);
     setIsPlaying(true);
     startComputerAnimation();
@@ -120,6 +123,7 @@ function App() {
   const resetGame = () => {
     stopAnimation(); // 애니메이션 멈추기
     intervalRef.current = null;
+    cancelledRef.current = true; //취소 상태 기억
 
     setUserSelect(null);
     setComputerSelect(null);
