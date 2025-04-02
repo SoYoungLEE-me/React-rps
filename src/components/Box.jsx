@@ -1,5 +1,4 @@
 import React from "react";
-import "./Box.css";
 
 const Box = ({ title, isLeft, result, item, forceIcon }) => {
   const icon = forceIcon || item?.icon || (isLeft ? "🤖" : "🙋‍♂️");

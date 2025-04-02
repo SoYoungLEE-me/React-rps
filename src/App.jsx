@@ -1,6 +1,7 @@
 import "./App.css";
 import Box from "./components/Box";
-import { useState } from "react";
+import ButtonGroup from "./components/ButtonGroup";
+import { useState, useRef } from "react";
 
 const choice = {
   rock: {
@@ -22,7 +23,7 @@ function App() {
   const [ComputerSelect, setComputerSelect] = useState(null);
   const [userResult, setUserResult] = useState("");
   const [computerResult, setComputerResult] = useState("");
-  const [animationInterval, setAnimationInterval] = useState(null);
+  const intervalRef = useRef(null);
 
   //스타트 버튼 추가
   const [isStarted, setIsStarted] = useState(false);
@@ -30,10 +31,7 @@ function App() {
   const [computerIcon, setComputerIcon] = useState("🤖");
 
   const play = (userChoice) => {
-    if (animationInterval) {
-      clearInterval(animationInterval); // 이전 interval 제거
-      setAnimationInterval(null);
-    }
+    stopAnimation();
 
     const user = choice[userChoice];
     const computer = randomChoice();
@@ -51,9 +49,11 @@ function App() {
     setComputerResult(computerResult);
 
     setTimeout(() => {
-      setComputerSelect(null);
-      setIsPlaying(true);
-      startComputerAnimation();
+      if (isStarted) {
+        setComputerSelect(null);
+        setIsPlaying(true);
+        startComputerAnimation();
+      }
     }, 1000);
   };
 
@@ -83,15 +83,38 @@ function App() {
   };
 
   const startComputerAnimation = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null; //중복 방지
+    }
+
     const icons = ["✊", "✋", "✌️"];
     let index = 0;
 
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setComputerIcon(icons[index % 3]);
       index++;
     }, 120);
+  };
 
-    setAnimationInterval(interval);
+  const stopAnimation = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+  };
+
+  //reset버튼
+  const resetGame = () => {
+    stopAnimation(); // 애니메이션 멈추기
+    intervalRef.current = null;
+
+    setUserSelect(null);
+    setComputerSelect(null);
+    setUserResult("");
+    setComputerResult("");
+
+    setComputerIcon("🤖"); // 다시 🤖 아이콘으로
+    setIsPlaying(false);
+    setIsStarted(false); // START 버튼이 다시 보이게
   };
 
   return (
@@ -116,11 +139,7 @@ function App() {
           <button onClick={startGame}>START</button>
         </div>
       ) : (
-        <div className="ButtonItem">
-          <button onClick={() => play("rock")}>✊</button>
-          <button onClick={() => play("scissors")}>✌️</button>
-          <button onClick={() => play("paper")}>✋</button>
-        </div>
+        <ButtonGroup onPlay={play} onReset={resetGame} />
       )}
     </div>
   );

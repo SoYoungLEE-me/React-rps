@@ -11,6 +11,52 @@
   margin: 50px auto;
 }
 
+/*Box 컴포넌트 css*/
+.BoxItem {
+  border: 5px solid rgb(140, 140, 140);
+  border-radius: 50px;
+  width: 350px;
+  height: 450px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.Top,
+.Middle,
+.Bottom {
+  flex: 1; /* 각각 영역을 1:1:1 비율로 나눔 */
+  display: flex;
+  justify-content: center; /* 가로 가운데 */
+  align-items: center; /* 세로 가운데 */
+}
+
+.IconItem {
+  font-size: 100px;
+  display: inline-block;
+}
+
+.Left {
+  transform: rotate(-90deg) scaleY(-1);
+}
+
+.Right {
+  transform: rotate(-90deg);
+}
+
+.WIN {
+  border: 5px solid rgb(104, 206, 246);
+}
+
+.LOSE {
+  border: 5px solid rgb(255, 73, 73);
+}
+
+.TIE {
+  border: 5px solid rgb(165, 255, 186);
+}
+
+/*Button 컴포넌트 css*/
 .ButtonItem {
   display: flex;
   justify-content: center;
@@ -57,5 +103,24 @@
 }
 
 .StartItem > button:hover {
+  transform: scale(1.1);
+}
+
+.ControlButtons {
+  margin-top: 35px;
+}
+
+.ControlButtons > button {
+  border: none;
+  border-radius: 12px;
+  padding: 15px 25px;
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: #72bdd8;
+  color: white;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.ControlButtons > button:hover {
   transform: scale(1.1);
 }
