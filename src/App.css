@@ -5,10 +5,14 @@
   height: 100vh;
 }
 
+.Title {
+  margin-top: 30px;
+}
+
 .Box {
   display: flex;
   gap: 30px;
-  margin: 50px auto;
+  margin: 30px auto;
 }
 
 /*Box 컴포넌트 css*/

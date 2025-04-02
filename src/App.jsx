@@ -23,12 +23,19 @@ function App() {
   const [ComputerSelect, setComputerSelect] = useState(null);
   const [userResult, setUserResult] = useState("");
   const [computerResult, setComputerResult] = useState("");
-  const intervalRef = useRef(null);
 
   //스타트 버튼 추가
   const [isStarted, setIsStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [computerIcon, setComputerIcon] = useState("🤖");
+  const intervalRef = useRef(null);
+
+  //스코어
+  const [score, setScore] = useState({
+    WIN: 0,
+    LOSE: 0,
+    TIE: 0,
+  });
 
   const play = (userChoice) => {
     stopAnimation();
@@ -55,6 +62,13 @@ function App() {
         startComputerAnimation();
       }
     }, 1000);
+
+    setScore((prev) => {
+      return {
+        ...prev,
+        [userResult]: prev[userResult] + 1,
+      };
+    });
   };
 
   const randomChoice = () => {
@@ -115,10 +129,20 @@ function App() {
     setComputerIcon("🤖"); // 다시 🤖 아이콘으로
     setIsPlaying(false);
     setIsStarted(false); // START 버튼이 다시 보이게
+
+    setScore({ WIN: 0, LOSE: 0, TIE: 0 });
   };
 
   return (
     <div className="App">
+      {!isStarted ? (
+        <h1 className="Title">Rock! Scissors! Paper!</h1>
+      ) : (
+        <h2>
+          {score.LOSE} : {score.WIN}
+        </h2>
+      )}
+
       <div className="Box">
         <Box
           title={"Computer"}
